@@ -18,7 +18,7 @@ Code for Both Training and Validation has been fully fixed. I have conducted 2 t
 
 <br>
 
-**Documentation of major bugs/problems fixed:**
+**Documentation of major bugs/problems that have been fixed:**
 
 1. Custom `collate_fn` function. Default one doesn't work because while batched `image` is a `tensor`, batched `target (label)` is a `list`. Default collate functions use `stack`, our custom `collate_fn` uses `append` to handle the lists. Especially notice that `target (label)` here is a `dictionary` with 2 keys `"class_labels"` & `"boxes"`
 
