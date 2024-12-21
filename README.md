@@ -13,7 +13,7 @@
 
 **Major Work Done so far/ Functionalities of our code:**
 
-Code for Both Training and Validation has been fully fixed. We have conducted 2 training experiments: `runs/experiment_1` training on 100% data, `runs/experiment_2_successful_val` training on 90% data, while performing validation on the remaining 10% data. In order to see *tensorboard visualization* of results for both experiments, clone the directory, open `Tensorboard Visualization.ipynb` file and runs the corresponding cells.
+Code for Both Training and Validation has been fully fixed. I have conducted 2 training experiments: `runs/experiment_1` training on 100% data, `runs/experiment_2_successful_val` training on 90% data, while performing validation on the remaining 10% data. In order to see *tensorboard visualization* of results for both experiments, clone the directory, open `Tensorboard Visualization.ipynb` file and runs the corresponding cells.
 
 **Documentation of major bugs/problems fixed:**
 
