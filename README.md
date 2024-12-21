@@ -17,10 +17,16 @@ Code for Both Training and Validation has been fully fixed. We have conducted 2 
 
 **Documentation of major bugs/problems fixed:**
 
-1. Custom `collate_fn` function. Default one doesn't work because while batched `image` is a `tensor`, batched `target (label)` is a `list`. Default collate functions use `stack`, our custom `collate_fn` uses `append` to handle the lists.
+1. Custom `collate_fn` function. Default one doesn't work because while batched `image` is a `tensor`, batched `target (label)` is a `list`. Default collate functions use `stack`, our custom `collate_fn` uses `append` to handle the lists. Especially notice that `target (label)` here is a `dictionary` with 2 keys `"class_labels"` & `"boxes"`
 
-2. Handle the case when there's only 1 bounding box detected in ground truth / predicted images. Because usually the dimensionality will only be 1 instead of 2 in thus case.
+2. (**Important**) I changed bounding box specification from (xmax, ymax, xmin, ymin) -> (xmin, ymin, xmax, ymax) when loading our image dataset. This is to accomodate the standard specification of the function `post_process_object_detection`.
 
-3. Data Type of loaded label has to strictly fit to the description in the documentation. Especially `bounding box` has to be changed from `float64` to `float32`, and `label` needs to be of type `long` as well.
+3. Handle the case when there's only 1 bounding box detected in ground truth / predicted images. Because usually the dimensionality will only be 1 instead of 2 in thus case.
 
-4. IoU Calculation (**Still need further update!**). To handle the case when the number of predicted boxes and ground truth are different, we need to match the different boxes and take the mean IoU across all matches. And because the predicted bounding boxes are often too many, we use `IoU_threshold` and `confidence_score` to filter out less important ones. However, this method still proves to be problematic because we observe that the IoU we obtain during this process is significantly smaller than normal. I think the cause of the problem is that some images have 0 detected boxes (due to the filtering) and their IoU is set to 0.0. As we take the mean across all IoU calculations, the IoU score is significantly pulled down. Further update of the IoU calculation method /algorithm shall be implemented in the following work.  
+4. Data Type of loaded label has to strictly fit to the description in the documentation. Especially `bounding box` has to be changed from `float64` to `float32`, and `label` needs to be of type `long` as well.
+
+5. Since we are targeting `single-channel images`, `YolosImageProcessor` should be adjusted from its default 3-channel behaviour during instantiation. Specifically, I set `image_mean = [0.5]`, `image_std = [0.5]` (Value could be changed later). Otherwise, you'll get a value error: `ValueError: mean must have 1 elements if it is an iterable, got 3`
+
+6. IoU Calculation (**Still need further update!**). To handle the case when the number of predicted boxes and ground truth are different, we need to match the different boxes and take the mean IoU across all matches. And because the predicted bounding boxes are often too many, we use `IoU_threshold` and `confidence_score` to filter out less important ones. However, this method still proves to be problematic because we observe that the IoU we obtain during this process is significantly smaller than normal. I think the cause of the problem is that some images have 0 detected boxes (due to the filtering) and their IoU is set to 0.0. As we take the mean across all IoU calculations, the IoU score is significantly pulled down. Further update of the IoU calculation method /algorithm shall be implemented in the following work.
+
+7. Other bugs that were fixed by carefully checking the documentation of input types and shapes. For example, `pred_boxes` and `true_boxes` have to be `numpy arrays` instead of `pytorch tensors` when calculating `IoU`. 
