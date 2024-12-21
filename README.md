@@ -4,7 +4,8 @@
 
 **TA Support by**: Jason Hughes *(Sincerely Appreciate his dedicated advice and support throughout every aspect of the project, and his answers to our questions that effectively gives us a clear direction for resolving our problems.*
 
-**Last Update**: 21/12/2024
+**Code Last Update**: 21/12/2024
+**Readme Last Update**: 21/12/2024
 
 <br>
 
@@ -20,4 +21,6 @@ Code for Both Training and Validation has been fully fixed. We have conducted 2 
 
 2. Handle the case when there's only 1 bounding box detected in ground truth / predicted images. Because usually the dimensionality will only be 1 instead of 2 in thus case.
 
-3. Data Type of loaded label has to strictly fit to the description in the documentation. Especially for 
+3. Data Type of loaded label has to strictly fit to the description in the documentation. Especially `bounding box` has to be changed from `float64` to `float32`, and `label` needs to be of type `long` as well.
+
+4. IoU Calculation (**Still need further update!**). To handle the case when the number of predicted boxes and ground truth are different, we need to match the different boxes and take the mean IoU across all matches. And because the predicted bounding boxes are often too many, we use `IoU_threshold` and `confidence_score` to filter out less important ones. However, this method still proves to be problematic because we observe that the IoU we obtain during this process is significantly smaller than normal. I think the cause of the problem is that some images have 0 detected boxes (due to the filtering) and their IoU is set to 0.0. As we take the mean across all IoU calculations, the IoU score is significantly pulled down. Further update of the IoU calculation method /algorithm shall be implemented in the following work.  
