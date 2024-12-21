@@ -18,4 +18,6 @@ Code for Both Training and Validation has been fully fixed. We have conducted 2 
 
 1. Custom `collate_fn` function. Default one doesn't work because while batched `image` is a `tensor`, batched `target (label)` is a `list`. Default collate functions use `stack`, our custom `collate_fn` uses `append` to handle the lists.
 
-2. 
+2. Handle the case when there's only 1 bounding box detected in ground truth / predicted images. Because usually the dimensionality will only be 1 instead of 2 in thus case.
+
+3. Data Type of loaded label has to strictly fit to the description in the documentation. Especially for 
