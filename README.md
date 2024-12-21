@@ -6,4 +6,8 @@
 
 **Last Update**: 21/12/2024
 
-The main challenge of this project is that we are targetting `single-channel images`. To gain the maximum flexibility and contol over the training & validation process when handling single-channel images, we choose to use the `YolosForObjectDetection` class from hugging face transformer library, instead of usingh the less customizable interface of `ultralytics`.  
+The main challenge of this project is that we are targetting `single-channel images`. To gain the maximum flexibility and contol over the training & validation process when handling single-channel images, we choose to use the `YolosForObjectDetection` class from hugging face transformer library, instead of using the less customizable interface of `ultralytics`.  
+
+**Major Work Done so far/ Functionalities of our code**:
+
+1. Code for Training and Validation has been fully fixed. Tensorboard Visualization of Results for **training YOLOs model on the entire IR image dataset** can be seen in 
