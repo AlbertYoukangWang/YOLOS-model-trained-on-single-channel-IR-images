@@ -28,7 +28,7 @@ def custom_collate_fn(batch):
 
 if __name__ == "__main__":
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    IoU_threshold = 0.7
+    IoU_threshold = 0.5 # 0.7 in previous experiment, now changed lower to handle IoU metric (avoid no boxes predicted due to filtering)
     batch_size = 8
 
     image_dir = "/mnt/extra-dtc/Infrared-Object-Detection/datasets/infrared/images"
